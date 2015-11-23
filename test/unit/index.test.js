@@ -42,6 +42,18 @@ describe(TEST_NAME, function() {
                           .that.deep.equals(style2);
     });
   });
+  describe("#options", function() {
+    it("should use 'file' as default storage", function() {
+      var board = new Cuttingboard();
+      expect(board.options).to.have.property("storage")
+                           .that.equals("file");
+    });
+    it("should use 'image' as default image name", function() {
+      var board = new Cuttingboard();
+      expect(board.options).to.have.property("name")
+                           .that.equals("image");
+    });
+  });
   });
 
 });

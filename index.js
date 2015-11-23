@@ -22,9 +22,12 @@ function Cuttingboard(options) {
   var self = this;
   var _options = _.merge({
     storage: "file",
-    imageName: "image",
-    imageFormat: "",
-    baseUri: ""
+    name: "image",
+    format: "",
+    folder: "",
+    bucket: "",
+    key: "",
+    secret: ""
   }, options);
 
   var _module = path.join(__dirname, "lib", "stores", _options.storage);
