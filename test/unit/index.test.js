@@ -42,6 +42,7 @@ describe(TEST_NAME, function() {
                           .that.deep.equals(style2);
     });
   });
+
   describe("#options", function() {
     it("should use 'file' as default storage", function() {
       var board = new Cuttingboard();
@@ -54,6 +55,33 @@ describe(TEST_NAME, function() {
                            .that.equals("image");
     });
   });
+
+  describe("#process", function() {
+    it("it returns invalid image source format", function(done) {
+      var board = new Cuttingboard();
+      var style = { size: "50x50", process: "copy", format: "png" };
+      board.style("thumb", style);
+
+      board.process({ path: txt_image }, function(err, images) {
+        expect(err).to.be.an.instanceof(Error)
+                   .with.property("message")
+                   .that.equals("Invalid image source format!");
+        done();
+      });
+    });
+
+    it("it returns invalid image destination format", function(done) {
+      var board = new Cuttingboard({ format: "txt" });
+      var style = { size: "50x50", process: "copy" };
+      board.style("thumb", style);
+
+      board.process({ path: jpg_image }, function(err, images) {
+        expect(err).to.be.an.instanceof(Error)
+                   .with.property("message")
+                   .that.equals("Invalid image destination format!");
+        done();
+      });
+    });
   });
 
 });

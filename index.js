@@ -13,7 +13,7 @@ var path = require("path");
 var processor = require(path.join(__dirname, "lib", "processor"));
 var helper = require(path.join(__dirname, "lib", "helper"));
 
-var validImageTypes = ["jpg", "png", "gif", "bmp"];
+var validImageFormats = ["jpg", "png", "gif", "bmp"];
 
 //==============================================================================
 //-- constructor
@@ -75,15 +75,21 @@ Cuttingboard.prototype.style = function(name, attrs) {
 
 Cuttingboard.prototype.process = function(options, done) {
   var self = this;
-  var images = {};
-  var imagePath = options.imagePath;
-  var imageType = helper.imageType(imagePath);
-  var imageFormat = options.imageFormat || self.options.imageFormat || imageType;
+  var _options = _.detect([options, {}], _.isObject);
+  var _done = _.detect([options, done, _.noop], _.isFunction);
+  var _images = {};
 
-  if (!_.contains(validImageTypes, imageFormat)) {
-    return done(new Error("Invalid image format!"));
+  var imagePath = _options.path || _options.src;
+  var imageName = _options.name || self.options.name;
+  var imageSrcFormat = helper.imageType(imagePath);
+  var imageDestFormat = _options.format || self.options.format || imageSrcFormat;
+
+  if (!self._isValidFormat(imageSrcFormat)) {
+    return _done(new Error("Invalid image source format!"));
   }
-  var fileName = (options.imageName || self.options.imageName) + "." + imageFormat;
+  if (!self._isValidFormat(imageDestFormat)) {
+    return _done(new Error("Invalid image destination format!"));
+  }
 
   function processImage(style, done) {
     async.auto({
@@ -92,7 +98,7 @@ Cuttingboard.prototype.process = function(options, done) {
         if (!_.isFunction(convert)) {
           return next();
         }
-        var params = { format: imageFormat };
+        var params = { path: imagePath, format: imageDestFormat };
         convert(params, next);
       },
       savedImage: ["processedImage", function(next, result) {
@@ -101,6 +107,7 @@ Cuttingboard.prototype.process = function(options, done) {
           return next();
         }
 
+        var fileName = imageName + "-" + style.name + "." + imageDestFormat;
         var params = { fileName: fileName, data: processedImage };
         self.store.save(params, next);
       }]
@@ -116,13 +123,20 @@ Cuttingboard.prototype.process = function(options, done) {
     }
     processImage(_.merge({ name: styleName }, style), function(err, imagePath) {
       if (!err && imagePath) {
-        images[styleName] = imagePath;
+        _images[styleName] = imagePath;
       }
       next(err);
     });
   }, function(err) {
-    done(err, images);
+    _done(err, _images);
   });
+};
+
+//==============================================================================
+//-- private instance methods
+
+Cuttingboard.prototype._isValidFormat = function(imageFormat) {
+  return _.contains(validImageFormats, imageFormat);
 };
 
 //==============================================================================
