@@ -6,6 +6,7 @@ global._ = require("lodash");
 
 global.Cuttingboard = require(cwd);
 global.helper = require(path.join(cwd, "lib", "helper"));
+global.processor = require(path.join(cwd, "lib", "processor"));
 
 global.jpg_image = path.join(TEST_FIXTURES_PATH, "sage.jpg");
 global.png_image = path.join(TEST_FIXTURES_PATH, "sage.png");
