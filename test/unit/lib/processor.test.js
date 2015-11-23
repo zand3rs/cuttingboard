@@ -92,4 +92,83 @@ describe(TEST_NAME, function() {
     });
   });
 
+  describe(".resize()", function() {
+    it("should return a resized data buffer of the given source file", function(done) {
+      processor.resize({ path: jpg_image, size: "50x50" }, function(err, data) {
+        expect(err).to.not.exist;
+        expect(data).to.exist;
+        expect(data).to.be.instanceof(Buffer);
+        expect(helper.isJpg(data)).to.be.true;
+        expect(data.toString() === imageBuffer.toString()).to.be.false;
+        done(err);
+      });
+    });
+
+    it("accepts > option", function(done) {
+      processor.resize({ src: jpg_image, size: "50x50>" }, function(err, data) {
+        expect(err).to.not.exist;
+        expect(data).to.exist;
+        expect(data).to.be.instanceof(Buffer);
+        expect(helper.isJpg(data)).to.be.true;
+        expect(data.toString() === imageBuffer.toString()).to.be.false;
+        done(err);
+      });
+    });
+
+    it("accepts < option", function(done) {
+      processor.resize({ src: jpg_image, size: "50x50<" }, function(err, data) {
+        expect(err).to.not.exist;
+        expect(data).to.exist;
+        expect(data).to.be.instanceof(Buffer);
+        expect(helper.isJpg(data)).to.be.true;
+        expect(data.toString() === imageBuffer.toString()).to.be.false;
+        done(err);
+      });
+    });
+
+    it("accepts ! option", function(done) {
+      processor.resize({ src: jpg_image, size: "50x50!" }, function(err, data) {
+        expect(err).to.not.exist;
+        expect(data).to.exist;
+        expect(data).to.be.instanceof(Buffer);
+        expect(helper.isJpg(data)).to.be.true;
+        expect(data.toString() === imageBuffer.toString()).to.be.false;
+        done(err);
+      });
+    });
+
+    it("accepts % option", function(done) {
+      processor.resize({ src: jpg_image, size: "50%" }, function(err, data) {
+        expect(err).to.not.exist;
+        expect(data).to.exist;
+        expect(data).to.be.instanceof(Buffer);
+        expect(helper.isJpg(data)).to.be.true;
+        expect(data.toString() === imageBuffer.toString()).to.be.false;
+        done(err);
+      });
+    });
+
+    it("accepts @ option", function(done) {
+      processor.resize({ src: jpg_image, size: "50@" }, function(err, data) {
+        expect(err).to.not.exist;
+        expect(data).to.exist;
+        expect(data).to.be.instanceof(Buffer);
+        expect(helper.isJpg(data)).to.be.true;
+        expect(data.toString() === imageBuffer.toString()).to.be.false;
+        done(err);
+      });
+    });
+
+    it("accepts format parameter", function(done) {
+      processor.resize({ src: jpg_image, size: "50x50", format: "png" }, function(err, data) {
+        expect(err).to.not.exist;
+        expect(data).to.exist;
+        expect(data).to.be.instanceof(Buffer);
+        expect(helper.isPng(data)).to.be.true;
+        expect(data.toString() === imageBuffer.toString()).to.be.false;
+        done(err);
+      });
+    });
+  });
+
 });
