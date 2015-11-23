@@ -1,31 +1,70 @@
 require("node-test-helper");
+var fs = require("fs");
 
 describe(TEST_NAME, function() {
+  var imageBuffer;
+  var imageFile;
 
   describe(".isJpg()", function() {
+    before(function(done) {
+      imageFile = jpg_image;
+      fs.readFile(imageFile, function(err, data) {
+        imageBuffer = data;
+        done(err);
+      });
+    });
+
     it("should return true if image is a jpeg", function() {
-      helper.isJpg(jpg_image).should.be.true;
+      helper.isJpg(imageBuffer).should.be.true;
+      helper.isJpg(imageFile).should.be.true;
       helper.isJpg(txt_image).should.be.false;
     });
   });
 
   describe(".isPng()", function() {
+    before(function(done) {
+      imageFile = png_image;
+      fs.readFile(imageFile, function(err, data) {
+        imageBuffer = data;
+        done(err);
+      });
+    });
+
     it("should return true if image is a png", function() {
-      helper.isPng(png_image).should.be.true;
+      helper.isPng(imageBuffer).should.be.true;
+      helper.isPng(imageFile).should.be.true;
       helper.isPng(txt_image).should.be.false;
     });
   });
 
   describe(".isGif()", function() {
+    before(function(done) {
+      imageFile = gif_image;
+      fs.readFile(imageFile, function(err, data) {
+        imageBuffer = data;
+        done(err);
+      });
+    });
+
     it("should return true if image is a gif", function() {
-      helper.isGif(gif_image).should.be.true;
+      helper.isGif(imageBuffer).should.be.true;
+      helper.isGif(imageFile).should.be.true;
       helper.isGif(txt_image).should.be.false;
     });
   });
 
   describe(".isBmp()", function() {
+    before(function(done) {
+      imageFile = bmp_image;
+      fs.readFile(imageFile, function(err, data) {
+        imageBuffer = data;
+        done(err);
+      });
+    });
+
     it("should return true if image is a bmp", function() {
-      helper.isBmp(bmp_image).should.be.true;
+      helper.isBmp(imageBuffer).should.be.true;
+      helper.isBmp(imageFile).should.be.true;
       helper.isBmp(txt_image).should.be.false;
     });
   });
