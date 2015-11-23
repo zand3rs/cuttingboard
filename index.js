@@ -63,7 +63,9 @@ function Cuttingboard(options) {
 //-- public instance methods
 
 Cuttingboard.prototype.style = function(name, attrs) {
-  this.styles[name] = _.cloneDeep(attrs);
+  var self = this;
+  self.styles[name] = _.cloneDeep(attrs);
+  return self;
 };
 
 //------------------------------------------------------------------------------

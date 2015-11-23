@@ -21,12 +21,27 @@ describe(TEST_NAME, function() {
   describe("#style()", function() {
     it("should merge the provided style to the styles setting", function() {
       var board = new Cuttingboard();
-      var style = { size: "50x50", process: "crop", extension: "png" };
+      var style = { size: "50x50", process: "crop", format: "png" };
       board.style("thumb", style);
       expect(board.styles).to.have.property("thumb")
                           .that.is.an("object")
                           .that.deep.equals(style);
     });
+
+    it("is chainable", function() {
+      var board = new Cuttingboard();
+      var style1 = { size: "50x50", process: "crop", format: "png" };
+      var style2 = { size: "80x80", process: "resize" };
+      board.style("thumb", style1)
+           .style("small", style2);
+      expect(board.styles).to.have.property("thumb")
+                          .that.is.an("object")
+                          .that.deep.equals(style1);
+      expect(board.styles).to.have.property("small")
+                          .that.is.an("object")
+                          .that.deep.equals(style2);
+    });
+  });
   });
 
 });
