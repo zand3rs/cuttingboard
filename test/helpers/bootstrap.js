@@ -5,6 +5,7 @@ global.async = require("async");
 global._ = require("lodash");
 
 global.Cuttingboard = require(cwd);
+global.Store = require(path.join(cwd, "lib", "store"));
 global.helper = require(path.join(cwd, "lib", "helper"));
 global.processor = require(path.join(cwd, "lib", "processor"));
 
