@@ -1,11 +1,12 @@
 require("node-test-helper");
 var fs = require("fs-extra");
 var path = require("path");
+var os = require("os");
 
 describe(TEST_NAME, function() {
 
   describe("#save()", function() {
-    var folder = "/tmp/cuttingboard";
+    var folder = path.join(os.tmpdir(), "cuttingboard");
     var fileName = "file.txt";
     var filePath = path.join(folder, fileName);
     var file = new File({ folder: folder });
