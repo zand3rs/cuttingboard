@@ -7,6 +7,7 @@ global._ = require("lodash");
 global.Cuttingboard = require(cwd);
 global.Store = require(path.join(cwd, "lib", "store"));
 global.File = require(path.join(cwd, "lib", "stores", "file"));
+global.S3 = require(path.join(cwd, "lib", "stores", "s3"));
 
 global.helper = require(path.join(cwd, "lib", "helper"));
 global.processor = require(path.join(cwd, "lib", "processor"));
