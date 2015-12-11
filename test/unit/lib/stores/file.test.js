@@ -36,11 +36,7 @@ describe(TEST_NAME, function() {
         data: "test data"
       }, function(err, res) {
         expect(err).to.not.exist;
-        expect(res).to.be.an("object");
-        expect(res).to.have.property("path")
-                   .that.equals(filePath);
-        expect(res).have.property("url")
-                   .that.equals(filePath);
+        expect(res).to.equal(filePath);
         expect(function() { fs.accessSync(filePath) }).to.not.throw(Error);
         expect(fs.readFileSync(filePath, { encoding: "binary" })).to.equal("test data");
         done(err);

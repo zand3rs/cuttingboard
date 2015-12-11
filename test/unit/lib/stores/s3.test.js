@@ -115,15 +115,10 @@ describe(TEST_NAME, function() {
           fileName: fileName,
           data: "test data"
         }, function(err, res) {
-          var pathPattern = "/" + folder + "/" + fileName;
           var urlPattern = new RegExp("https?:\/\/.*\/" + folder + "\/" + fileName);
 
           expect(err).to.not.exist;
-          expect(res).to.be.an("object");
-          expect(res).to.have.property("path")
-                     .that.equals(pathPattern);
-          expect(res).have.property("url")
-                     .that.match(urlPattern);
+          expect(res).to.match(urlPattern);
           done(err);
         });
       });
