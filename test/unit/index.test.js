@@ -93,6 +93,24 @@ describe(TEST_NAME, function() {
         done(err);
       });
     });
+
+    it("it should not process unsupported format", function(done) {
+      var board = new Cuttingboard({
+        folder: path.join(os.tmpdir(), "cuttingboard"),
+        styles: {
+          thumb: { process: "crop", size: "50x50", format: "txt" }
+        }
+      });
+
+      board.process({ src: jpg_image }, function(err, images) {
+        expect(err).to.not.exist;
+        expect(images).to.be.an("object");
+        expect(images).to.have.property("original")
+                      .that.match(/-original\.jpg$/);
+        expect(images).to.not.have.property("thumb");
+        done(err);
+      });
+    });
   });
 
 });
