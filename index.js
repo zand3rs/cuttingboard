@@ -82,23 +82,25 @@ Cuttingboard.prototype.process = function(options, done) {
   var imagePath = _options.path || _options.src;
   var imageName = _options.name || self.options.name;
   var imageSrcFormat = helper.imageType(imagePath);
-  var imageDestFormat = _options.format || self.options.format || imageSrcFormat;
 
   if (!self._isValidFormat(imageSrcFormat)) {
     return _done(new Error("Invalid image source format!"));
   }
-  if (!self._isValidFormat(imageDestFormat)) {
-    return _done(new Error("Invalid image destination format!"));
-  }
 
   function processImage(style, done) {
+    var imageDestFormat = style.format || _options.format || self.options.format || imageSrcFormat;
+
     async.auto({
       processedImage: function(next) {
         var convert = processor[style.process];
         if (!_.isFunction(convert)) {
           return next();
         }
-        var params = { path: imagePath, format: imageDestFormat };
+        if (!self._isValidFormat(imageDestFormat)) {
+          return next();
+        }
+
+        var params = _.merge(_.clone(style), { path: imagePath, format: imageDestFormat });
         convert(params, next);
       },
       savedImage: ["processedImage", function(next, result) {

@@ -1,4 +1,6 @@
 require("node-test-helper");
+var path = require("path");
+var os = require("os");
 
 describe(TEST_NAME, function() {
 
@@ -70,16 +72,25 @@ describe(TEST_NAME, function() {
       });
     });
 
-    it("it returns invalid image destination format", function(done) {
-      var board = new Cuttingboard({ format: "txt" });
-      var style = { size: "50x50", process: "copy" };
-      board.style("thumb", style);
+    it("it should be successful", function(done) {
+      var board = new Cuttingboard({
+        folder: path.join(os.tmpdir(), "cuttingboard"),
+        styles: {
+          thumb: { process: "crop", size: "50x50", format: "gif" },
+          small: { process: "resize", size: "100x100", format: "png" }
+        }
+      });
 
-      board.process({ path: jpg_image }, function(err, images) {
-        expect(err).to.be.an.instanceof(Error)
-                   .with.property("message")
-                   .that.equals("Invalid image destination format!");
-        done();
+      board.process({ src: jpg_image }, function(err, images) {
+        expect(err).to.not.exist;
+        expect(images).to.be.an("object");
+        expect(images).with.property("original")
+                      .that.match(/-original\.jpg$/);
+        expect(images).with.property("thumb")
+                      .that.match(/-thumb\.gif$/);
+        expect(images).with.property("small")
+                      .that.match(/-small\.png$/);
+        done(err);
       });
     });
   });
