@@ -83,7 +83,7 @@ Cuttingboard.prototype.process = function(options, done) {
   var imageName = _options.name || self.options.name;
   var imageSrcFormat = helper.imageType(imagePath);
 
-  if (!self._isValidFormat(imageSrcFormat)) {
+  if (!isValidFormat(imageSrcFormat)) {
     return _done(new Error("Invalid image source format!"));
   }
 
@@ -96,7 +96,7 @@ Cuttingboard.prototype.process = function(options, done) {
         if (!_.isFunction(convert)) {
           return next();
         }
-        if (!self._isValidFormat(imageDestFormat)) {
+        if (!isValidFormat(imageDestFormat)) {
           return next();
         }
 
@@ -135,10 +135,10 @@ Cuttingboard.prototype.process = function(options, done) {
 };
 
 //==============================================================================
-//-- private instance methods
+//-- helpers
 
-Cuttingboard.prototype._isValidFormat = function(imageFormat) {
+ function isValidFormat(imageFormat) {
   return _.contains(validImageFormats, imageFormat);
-};
+}
 
 //==============================================================================
