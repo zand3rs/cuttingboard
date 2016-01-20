@@ -24,18 +24,18 @@
     "url": "https://github.com/zand3rs/cuttingboard/issues"
   },
   "dependencies": {
-    "async": "^1.4.2",
-    "fs-extra": "^0.26.2",
-    "gm": "^1.21.1",
-    "is-bmp": "^1.0.0",
-    "is-gif": "^1.0.0",
-    "is-jpg": "^1.0.0",
-    "is-png": "^1.0.0",
-    "knox": "^0.9.2",
-    "lodash": "^3.10.1",
-    "read-chunk": "^1.0.1"
+    "async": "~1.4.2",
+    "fs-extra": "~0.26.2",
+    "gm": "~1.21.1",
+    "is-bmp": "~1.0.0",
+    "is-gif": "~1.0.0",
+    "is-jpg": "~1.0.0",
+    "is-png": "~1.0.0",
+    "knox": "~0.9.2",
+    "lodash": "~3.10.1",
+    "read-chunk": "~1.0.1"
   },
   "devDependencies": {
-    "node-test-helper": "^0.2.6"
+    "node-test-helper": "~1.0.0"
   }
 }
