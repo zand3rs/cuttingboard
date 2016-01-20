@@ -137,7 +137,7 @@ Cuttingboard.prototype.process = function(options, done) {
 //==============================================================================
 //-- helpers
 
- function isValidFormat(imageFormat) {
+function isValidFormat(imageFormat) {
   return _.contains(validImageFormats, imageFormat);
 }
 
