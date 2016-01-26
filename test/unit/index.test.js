@@ -16,14 +16,14 @@ describe(TEST_NAME, function() {
       var board = new Cuttingboard();
       expect(board.styles).to.have.property("original")
                           .that.is.an("object")
-                          .that.deep.equals({ process: "copy" });
+                          .that.deep.equals({ method: "copy" });
     });
   });
 
   describe("#style()", function() {
     it("should merge the provided style to the styles setting", function() {
       var board = new Cuttingboard();
-      var style = { size: "50x50", process: "crop", format: "png" };
+      var style = { size: "50x50", method: "crop", format: "png" };
       board.style("thumb", style);
       expect(board.styles).to.have.property("thumb")
                           .that.is.an("object")
@@ -32,8 +32,8 @@ describe(TEST_NAME, function() {
 
     it("is chainable", function() {
       var board = new Cuttingboard();
-      var style1 = { size: "50x50", process: "crop", format: "png" };
-      var style2 = { size: "80x80", process: "resize" };
+      var style1 = { size: "50x50", method: "crop", format: "png" };
+      var style2 = { size: "80x80", method: "resize" };
       board.style("thumb", style1)
            .style("small", style2);
       expect(board.styles).to.have.property("thumb")
@@ -61,7 +61,7 @@ describe(TEST_NAME, function() {
   describe("#process", function() {
     it("it returns invalid image source format", function(done) {
       var board = new Cuttingboard();
-      var style = { size: "50x50", process: "copy", format: "png" };
+      var style = { size: "50x50", method: "copy", format: "png" };
       board.style("thumb", style);
 
       board.process({ path: txt_image }, function(err, images) {
@@ -76,8 +76,8 @@ describe(TEST_NAME, function() {
       var board = new Cuttingboard({
         folder: path.join(os.tmpdir(), "cuttingboard"),
         styles: {
-          thumb: { process: "crop", size: "50x50", format: "gif" },
-          small: { process: "resize", size: "100x100", format: "png" }
+          thumb: { method: "crop", size: "50x50", format: "gif" },
+          small: { method: "resize", size: "100x100", format: "png" }
         }
       });
 
@@ -98,7 +98,7 @@ describe(TEST_NAME, function() {
       var board = new Cuttingboard({
         folder: path.join(os.tmpdir(), "cuttingboard"),
         styles: {
-          thumb: { process: "crop", size: "50x50", format: "txt" }
+          thumb: { method: "crop", size: "50x50", format: "txt" }
         }
       });
 

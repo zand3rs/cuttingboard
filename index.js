@@ -34,7 +34,7 @@ function Cuttingboard(options) {
   var _storeImpl = require(_module);
   var _store = new _storeImpl(_options);
 
-  var _defaultStyle = { original: { process: "copy" } };
+  var _defaultStyle = { original: { method: "copy" } };
   var _styles = _.merge(_.cloneDeep(_defaultStyle), _options.styles);
 
   //----------------------------------------------------------------------------
@@ -92,7 +92,7 @@ Cuttingboard.prototype.process = function(options, done) {
 
     async.auto({
       processedImage: function(next) {
-        var convert = processor[style.process];
+        var convert = processor[style.method];
         if (!_.isFunction(convert)) {
           return next();
         }
