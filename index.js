@@ -65,9 +65,9 @@ function Cuttingboard(options) {
 //==============================================================================
 //-- public instance methods
 
-Cuttingboard.prototype.style = function(name, attrs) {
+Cuttingboard.prototype.style = function(name, options) {
   var self = this;
-  self.styles[name] = _.cloneDeep(attrs);
+  self.styles[name] = _.cloneDeep(options);
   return self;
 };
 
