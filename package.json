@@ -1,7 +1,7 @@
 {
   "name": "cuttingboard",
   "version": "0.1.0",
-  "description": "An image processing library using ImageMagick suite.",
+  "description": "An image processing library with multiple storage support.",
   "main": "index.js",
   "scripts": {
     "test": "make MOCHA_OPTS='-C -R dot' test"
