@@ -4,7 +4,7 @@ An image processing library with multiple storage support. Inspired by [papercut
 
 ## Getting Started
 
-First, download and install [GraphicsMagick](http://www.graphicsmagick.org).
+First, download and install [GraphicsMagick](http://www.graphicsmagick.org) or [ImageMagick](http://www.imagemagick.org).
 
 ## Installation
 
@@ -30,12 +30,22 @@ board.process({ src: "/path/to/image" }, function(err, images) {
   // }
 });
 
+//-- save files to a folder using a custom file name
+var board = new Cuttingboard({
+  folder: "/tmp/my-folder",
+  name: "my-image"
+});
+
 //-- upload to s3
-var Cuttingboard = require("cuttingboard");
 var board = new Cuttingboard({
   storage: "s3",
   bucket: "my-bucket",
   key: "AWS_ACCESS_KEY",
   secret: "AWS_SECRET_KEY"
+});
+
+//-- set the default image format
+var board = new Cuttingboard({
+  format: "jpg"
 });
 ```
