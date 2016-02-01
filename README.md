@@ -48,4 +48,17 @@ var board = new Cuttingboard({
 var board = new Cuttingboard({
   format: "jpg"
 });
+
+//-- override the default image format
+board.style("thumb", { size: "50x50", method: "crop", format: "png" })
+     .style("small", { size: "80x80", method: "resize" });
+
+board.process({ src: "/path/to/image", format: "gif" }, function(err, images) {
+  //-- images:
+  // {
+  //   original: "image-original.gif",
+  //   thumb: "image-thumb.png",
+  //   small: "image-small.gif"
+  // }
+});
 ```
