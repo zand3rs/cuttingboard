@@ -1,6 +1,6 @@
 {
   "name": "cuttingboard",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "An image processing library with multiple storage support.",
   "main": "index.js",
   "scripts": {
