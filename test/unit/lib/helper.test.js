@@ -89,4 +89,49 @@ describe(TEST_NAME, function() {
     });
   });
 
+  describe(".resolve()", function() {
+    [
+      ["http://www.abc.com", "http://www.foo.bar/images/one.jpg"       , "http://www.abc.com/images/one.jpg"],
+      ["http://www.abc.com", "https://www.foo.bar/images/two.jpg"      , "http://www.abc.com/images/two.jpg"],
+      ["http://www.abc.com", "http://www.foo.bar:8080/images/three.jpg", "http://www.abc.com/images/three.jpg"],
+      ["http://www.abc.com", "https://www.foo.bar:8080/images/four.jpg", "http://www.abc.com/images/four.jpg"],
+      ["http://www.abc.com/bucket", "http://www.foo.bar/images/one.jpg"       , "http://www.abc.com/bucket/images/one.jpg"],
+      ["http://www.abc.com/bucket", "https://www.foo.bar/images/two.jpg"      , "http://www.abc.com/bucket/images/two.jpg"],
+      ["http://www.abc.com/bucket", "http://www.foo.bar:8080/images/three.jpg", "http://www.abc.com/bucket/images/three.jpg"],
+      ["http://www.abc.com/bucket", "https://www.foo.bar:8080/images/four.jpg", "http://www.abc.com/bucket/images/four.jpg"],
+      ["http://www.def.com", "//www.foo.bar/images/one.jpg"       , "http://www.def.com/images/one.jpg"],
+      ["http://www.def.com", "//www.foo.bar/images/two.jpg"       , "http://www.def.com/images/two.jpg"],
+      ["http://www.def.com", "//www.foo.bar:8080/images/three.jpg", "http://www.def.com/images/three.jpg"],
+      ["http://www.def.com", "//www.foo.bar:8080/images/four.jpg" , "http://www.def.com/images/four.jpg"],
+      ["http://www.def.com/bucket", "//www.foo.bar/images/one.jpg"       , "http://www.def.com/bucket/images/one.jpg"],
+      ["http://www.def.com/bucket", "//www.foo.bar/images/two.jpg"       , "http://www.def.com/bucket/images/two.jpg"],
+      ["http://www.def.com/bucket", "//www.foo.bar:8080/images/three.jpg", "http://www.def.com/bucket/images/three.jpg"],
+      ["http://www.def.com/bucket", "//www.foo.bar:8080/images/four.jpg" , "http://www.def.com/bucket/images/four.jpg"],
+      ["http://www.ghi.com"      , "/images/one.jpg"  , "http://www.ghi.com/images/one.jpg"],
+      ["http://www.ghi.com/"     , "/images/two.jpg"  , "http://www.ghi.com/images/two.jpg"],
+      ["http://www.ghi.com:8080/", "/images/three.jpg", "http://www.ghi.com:8080/images/three.jpg"],
+      ["http://www.ghi.com"      , "./images/four.jpg", "http://www.ghi.com/images/four.jpg"],
+      ["http://www.ghi.com/"     , "./images/five.jpg", "http://www.ghi.com/images/five.jpg"],
+      ["http://www.ghi.com:8080/", "./images/six.jpg" , "http://www.ghi.com:8080/images/six.jpg"],
+      ["http://www.ghi.com"      , "images/one.jpg"   , "http://www.ghi.com/one.jpg"],
+      ["http://www.ghi.com/"     , "images/two.jpg"   , "http://www.ghi.com/two.jpg"],
+      ["http://www.ghi.com:8080/", "images/three.jpg" , "http://www.ghi.com:8080/three.jpg"],
+      ["http://www.ghi.com"      , "/four.jpg"        , "http://www.ghi.com/four.jpg"],
+      [""  , "images/one.jpg"  , "images/one.jpg"],
+      ["/" , "images/two.jpg"  , "/two.jpg"],
+      ["//", "images/three.jpg", "//three.jpg"],
+      ["/uploads", "static/images/four.jpg"   , "/uploads/images/four.jpg"],
+      ["/uploads", "./static/images/five.jpg" , "/uploads/static/images/five.jpg"],
+      ["uploads" , "static/images/six.jpg"    , "uploads/images/six.jpg"],
+      ["uploads" , "./static/images/seven.jpg", "uploads/static/images/seven.jpg"]
+    ].forEach(function(item) {
+      var baseUrl = item[0];
+      var originalUrl = item[1];
+      var expectedUrl = item[2];
+      it("should return " + expectedUrl, function() {
+        expect(helper.resolve(baseUrl, originalUrl)).to.equal(expectedUrl);
+      });
+    });
+  });
+
 });
