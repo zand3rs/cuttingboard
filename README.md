@@ -61,4 +61,48 @@ board.process({ src: "/path/to/image", format: "gif" }, function(err, images) {
   //   small: "image-small.gif"
   // }
 });
+
+//-- using baseUrl
+var board = new Cuttingboard({
+  folder: "./my-folder",
+  baseUrl: "http://assets.localhost/images"
+});
+
+board.process({ src: "/path/to/image",  }, function(err, images) {
+  //-- images:
+  // {
+  //   original: "http://assets.localhost/images/my-folder/image-original.jpg"
+  // }
+});
+
+var board = new Cuttingboard({
+  folder: "my-folder",
+  baseUrl: "http://assets.localhost/images"
+});
+
+board.process({ src: "/path/to/image",  }, function(err, images) {
+  //-- images:
+  // {
+  //   original: "http://assets.localhost/images/image-original.jpg"
+  // }
+});
+
+//-- with src option
+var board = new Cuttingboard({
+  src: "/path/to/image"
+});
+
+board.process(function(err, images) {
+  //-- images:
+  // {
+  //   original: "image-original.jpg"
+  // }
+});
+
+board.process({}, function(err, images) {
+  //-- images:
+  // {
+  //   original: "image-original.jpg"
+  // }
+});
 ```
