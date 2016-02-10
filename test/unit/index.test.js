@@ -111,6 +111,42 @@ describe(TEST_NAME, function() {
         done(err);
       });
     });
+
+    describe("with baseUrl constructor option", function() {
+      it("it should set the correct image URL", function(done) {
+        var folder = path.join(os.tmpdir(), "cuttingboard");
+        var baseUrl = "http://assets.abc.com/images";
+        var board = new Cuttingboard({
+          folder: folder,
+          baseUrl: baseUrl
+        });
+
+        board.process({ src: jpg_image }, function(err, images) {
+          expect(err).to.not.exist;
+          expect(images).to.be.an("object");
+          expect(images).to.have.property("original")
+                        .that.equals(baseUrl + folder + "/image-original.jpg");
+          done(err);
+        });
+      });
+    });
+
+    describe("without baseUrl constructor option", function() {
+      it("it should set the correct image URL", function(done) {
+        var folder = path.join(os.tmpdir(), "cuttingboard");
+        var board = new Cuttingboard({
+          folder: folder
+        });
+
+        board.process({ src: jpg_image }, function(err, images) {
+          expect(err).to.not.exist;
+          expect(images).to.be.an("object");
+          expect(images).to.have.property("original")
+                        .that.equals(folder + "/image-original.jpg");
+          done(err);
+        });
+      });
+    });
   });
 
 });

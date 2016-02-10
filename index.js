@@ -27,7 +27,8 @@ function Cuttingboard(options) {
     folder: "",
     bucket: "",
     key: "",
-    secret: ""
+    secret: "",
+    baseUrl: ""
   }, options);
 
   var _module = path.join(__dirname, "lib", "stores", _options.storage);
@@ -81,6 +82,7 @@ Cuttingboard.prototype.process = function(options, done) {
 
   var imagePath = _options.path || _options.src;
   var imageName = _options.name || self.options.name;
+  var imageBaseUrl = _options.baseUrl || self.options.baseUrl;
   var imageSrcFormat = helper.imageType(imagePath);
 
   if (!isValidFormat(imageSrcFormat)) {
@@ -114,7 +116,7 @@ Cuttingboard.prototype.process = function(options, done) {
         self.store.save(params, next);
       }]
     }, function(err, result) {
-      var savedImage = result.savedImage;
+      var savedImage = helper.resolve(imageBaseUrl, result.savedImage);
       done(err, savedImage);
     });
   }
