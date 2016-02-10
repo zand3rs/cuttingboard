@@ -28,7 +28,8 @@ function Cuttingboard(options) {
     bucket: "",
     key: "",
     secret: "",
-    baseUrl: ""
+    baseUrl: "",
+    src: ""
   }, options);
 
   var _module = path.join(__dirname, "lib", "stores", _options.storage);
@@ -80,7 +81,7 @@ Cuttingboard.prototype.process = function(options, done) {
   var _done = _.detect([options, done, _.noop], _.isFunction);
   var _images = {};
 
-  var imagePath = _options.path || _options.src;
+  var imagePath = _options.path || _options.src || self.options.src;
   var imageName = _options.name || self.options.name;
   var imageBaseUrl = _options.baseUrl || self.options.baseUrl;
   var imageSrcFormat = helper.imageType(imagePath);

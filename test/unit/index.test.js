@@ -147,6 +147,40 @@ describe(TEST_NAME, function() {
         });
       });
     });
+
+    describe("with src constructor option", function() {
+      it("it should be successful even without the option parameter", function(done) {
+        var folder = path.join(os.tmpdir(), "cuttingboard");
+        var board = new Cuttingboard({
+          folder: folder,
+          src: jpg_image
+        });
+
+        board.process(function(err, images) {
+          expect(err).to.not.exist;
+          expect(images).to.be.an("object");
+          expect(images).to.have.property("original")
+                        .that.equals(folder + "/image-original.jpg");
+          done(err);
+        });
+      });
+    });
+
+    describe("without src constructor option", function() {
+      it("it should return an error without the src option parameter", function(done) {
+        var folder = path.join(os.tmpdir(), "cuttingboard");
+        var board = new Cuttingboard({
+          folder: folder
+        });
+
+        board.process(function(err, images) {
+          expect(err).to.be.an.instanceof(Error)
+                     .with.property("message")
+                     .that.equals("Invalid image source format!");
+          done();
+        });
+      });
+    });
   });
 
 });
